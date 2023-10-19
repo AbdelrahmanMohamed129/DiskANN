@@ -30,6 +30,7 @@ diskann::Index<DT, DynamicIdType, filterT> dynamic_index_builder(
     const size_t max_vectors, const uint32_t initial_search_complexity, const uint32_t initial_search_threads,
     const bool concurrent_consolidation, const uint32_t num_frozen_points)
 {
+    // diskann::cout << "Farah is in dynamic_index_builder" << std::endl;
     const uint32_t _initial_search_threads = initial_search_threads != 0 ? initial_search_threads : omp_get_num_procs();
 
     auto index_search_params = diskann::IndexSearchParams(initial_search_complexity, _initial_search_threads);
@@ -64,6 +65,9 @@ DynamicMemoryIndex<DT>::DynamicMemoryIndex(const diskann::Metric m, const size_t
 
 template <class DT> void DynamicMemoryIndex<DT>::load(const std::string &index_path)
 {
+    std::cout << "Farah is in load" << std::endl;
+    diskann::cout << "Farah is in load" << std::endl;
+
     const std::string tags_file = index_path + ".tags";
     if (!file_exists(tags_file))
     {
@@ -76,6 +80,7 @@ template <class DT>
 int DynamicMemoryIndex<DT>::insert(const py::array_t<DT, py::array::c_style | py::array::forcecast> &vector,
                                    const DynamicIdType id)
 {
+    diskann::cout << "Farah is in insert" << std::endl;
     return _index.insert_point(vector.data(), id);
 }
 
@@ -85,6 +90,7 @@ py::array_t<int> DynamicMemoryIndex<DT>::batch_insert(
     py::array_t<DynamicIdType, py::array::c_style | py::array::forcecast> &ids, const int32_t num_inserts,
     const int num_threads)
 {
+    // diskann::cout << "Farah is in batch_insert" << std::endl;
     if (num_threads == 0)
         omp_set_num_threads(omp_get_num_procs());
     else
@@ -102,11 +108,13 @@ py::array_t<int> DynamicMemoryIndex<DT>::batch_insert(
 
 template <class DT> int DynamicMemoryIndex<DT>::mark_deleted(const DynamicIdType id)
 {
+    diskann::cout << "Farah is in mark_deleted" << std::endl;
     return this->_index.lazy_delete(id);
 }
 
 template <class DT> void DynamicMemoryIndex<DT>::save(const std::string &save_path, const bool compact_before_save)
 {
+    diskann::cout << "Farah is in save" << std::endl;
     if (save_path.empty())
     {
         throw std::runtime_error("A save_path must be provided");
@@ -118,6 +126,8 @@ template <class DT>
 NeighborsAndDistances<DynamicIdType> DynamicMemoryIndex<DT>::search(
     py::array_t<DT, py::array::c_style | py::array::forcecast> &query, const uint64_t knn, const uint64_t complexity)
 {
+    std::cout << "Farah is in search" << std::endl;
+    diskann::cout << "Farah is in search" << std::endl;
     py::array_t<DynamicIdType> ids(knn);
     py::array_t<float> dists(knn);
     std::vector<DT *> empty_vector;
@@ -130,6 +140,8 @@ NeighborsAndDistances<DynamicIdType> DynamicMemoryIndex<DT>::batch_search(
     py::array_t<DT, py::array::c_style | py::array::forcecast> &queries, const uint64_t num_queries, const uint64_t knn,
     const uint64_t complexity, const uint32_t num_threads)
 {
+    std::cout << "Farah is in batch_search" << std::endl;
+    diskann::cout << "Farah is in batch_search" << std::endl;
     py::array_t<DynamicIdType> ids({num_queries, knn});
     py::array_t<float> dists({num_queries, knn});
     std::vector<DT *> empty_vector;
@@ -152,11 +164,13 @@ NeighborsAndDistances<DynamicIdType> DynamicMemoryIndex<DT>::batch_search(
 
 template <class DT> void DynamicMemoryIndex<DT>::consolidate_delete()
 {
+    diskann::cout << "Farah is in consolidate_delete" << std::endl;
     _index.consolidate_deletes(_write_parameters);
 }
 
 template <class DT> size_t DynamicMemoryIndex<DT>::num_points()
 {
+    diskann::cout << "Farah is in num_points" << std::endl;
     return _index.get_num_points();
 }
 

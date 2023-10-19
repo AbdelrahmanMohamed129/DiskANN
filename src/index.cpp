@@ -2181,6 +2181,7 @@ template <typename T, typename TagT, typename LabelT>
 size_t Index<T, TagT, LabelT>::_search_with_tags(const DataType &query, const uint64_t K, const uint32_t L,
                                                  const TagType &tags, float *distances, DataVector &res_vectors)
 {
+    diskann::cout << "Farah is in search_with_tags" << std::endl;
     try
     {
         return this->search_with_tags(std::any_cast<const T *>(query), K, L, std::any_cast<TagT *>(tags), distances,
@@ -2407,6 +2408,7 @@ inline void Index<T, TagT, LabelT>::process_delete(const tsl::robin_set<uint32_t
 template <typename T, typename TagT, typename LabelT>
 consolidation_report Index<T, TagT, LabelT>::consolidate_deletes(const IndexWriteParameters &params)
 {
+    diskann::cout << "Farah is in consolidate_deletes" << std::endl;
     if (!_enable_tags)
         throw diskann::ANNException("Point tag array not instantiated", -1, __FUNCSIG__, __FILE__, __LINE__);
 
