@@ -90,6 +90,7 @@ py::array_t<int> DynamicMemoryIndex<DT>::batch_insert(
     py::array_t<DynamicIdType, py::array::c_style | py::array::forcecast> &ids, const int32_t num_inserts,
     const int num_threads)
 {
+    diskann::cout << "Farah is in batch_insert" << std::endl;
     if (num_threads == 0)
         omp_set_num_threads(omp_get_num_procs());
     else
