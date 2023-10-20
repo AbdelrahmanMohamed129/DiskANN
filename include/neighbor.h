@@ -95,6 +95,7 @@ class NeighborPriorityQueue
 
     Neighbor closest_unexpanded()
     {
+        std::cout<<"Farah is in closest_unexpanded greedy"<<std::endl;
         _data[_cur].expanded = true;
         size_t pre = _cur;
         while (_cur < _size && _data[_cur].expanded)
@@ -102,6 +103,23 @@ class NeighborPriorityQueue
             _cur++;
         }
         return _data[pre];
+    }
+
+    std::vector<Neighbor> closest_unexpanded_beam()
+    {
+        std::vector<Neighbor> nearest_neighbors;
+
+        while (_cur < _size && nearest_neighbors.size() < k)
+        {
+            if (!_data[_cur].expanded)
+            {
+                _data[_cur].expanded = true;
+                nearest_neighbors.push_back(_data[_cur]);
+            }
+            _cur++;
+        }
+
+        return nearest_neighbors;
     }
 
     bool has_unexpanded_node() const
