@@ -34,7 +34,7 @@ diskann::Index<DT, DynamicIdType, filterT> dynamic_index_builder(const diskann::
                                                                  const uint32_t initial_search_threads,
                                                                  const bool concurrent_consolidation)
 {
-    diskann::cout << "Farah is in dynamic_index_builder" << std::endl;
+    diskann::cout << "Farah is in dynamic_index_builder. ez" << std::endl;
     const uint32_t _initial_search_threads =
         initial_search_threads != 0 ? initial_search_threads : omp_get_num_threads();
     return diskann::Index<DT, DynamicIdType, filterT>(
