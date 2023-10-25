@@ -11,7 +11,7 @@ use crate::index::InmemIndex;
 use crate::model::{scratch::InMemQueryScratch, Neighbor, Vertex};
 use hashbrown::hash_set::Entry::*;
 use vector::FullPrecisionDistance;
-use std::io::{self, Write};     /// momkn n-comment dh
+use std::io::{self, Write};
 impl<T, const N: usize> InmemIndex<T, N>
 where
     T: Default + Copy + Sync + Send + Into<f32>,
@@ -138,7 +138,7 @@ where
         query: &Vertex<T, N>,
         scratch: &mut InMemQueryScratch<T, N>,
     ) -> ANNResult<(Vec<Neighbor>, u32)> {
-        print!("Farah is in rust. ez")
+        print!("Farah is in rust")
         let mut visited_nodes =
             Vec::with_capacity((3 * scratch.candidate_size + scratch.max_degree) as usize);
 
