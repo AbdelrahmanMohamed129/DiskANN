@@ -115,7 +115,13 @@ class NeighborPriorityQueue
             {
                 _data[_cur].expanded = true;
                 nearest_neighbors.push_back(_data[_cur]);
+                _cur++;
             }
+            else break;
+        }
+
+        while (_cur < _size && _data[_cur].expanded)
+        {
             _cur++;
         }
 
