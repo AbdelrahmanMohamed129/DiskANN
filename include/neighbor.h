@@ -109,7 +109,7 @@ class NeighborPriorityQueue
     {
         std::vector<Neighbor> nearest_neighbors;
 
-        while (_cur < _size && nearest_neighbors.size() < 3)
+        while (_cur < _size && nearest_neighbors.size() < 8)
         {
             if (!_data[_cur].expanded)
             {
