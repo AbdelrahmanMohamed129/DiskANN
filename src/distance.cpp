@@ -535,7 +535,7 @@ template <typename T> float DistanceFastL2<T>::norm(const T *a, uint32_t size) c
     return result;
 }
 
-float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint32_t size)
+float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint32_t size) const
 {
     auto distance2 = dist_cache.find({{a[0],a[1]},{b[0],b[1]}});
     if (distance2 != dist_cache.end())
