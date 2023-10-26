@@ -28,7 +28,7 @@ namespace diskann
 template <typename T>
 float Distance<T>::compare(const T *a, const T *b, const float normA, const float normB, uint32_t length) const
 {
-    std::cout << "Distance.cpp_compare\n";
+    // std::cout << "Distance.cpp_compare\n";
     throw std::logic_error("This function is not implemented.");
 }
 
@@ -76,7 +76,7 @@ float DistanceCosineInt8::compare(const int8_t *a, const int8_t *b, uint32_t len
 #ifdef _WINDOWS
     return diskann::CosineSimilarity2<int8_t>(a, b, length);
 #else
-    std::cout << "Distance.cpp_compare2\n";
+    // std::cout << "Distance.cpp_compare2\n";
     int magA = 0, magB = 0, scalarProduct = 0;
     for (uint32_t i = 0; i < length; i++)
     {
@@ -94,7 +94,7 @@ float DistanceCosineFloat::compare(const float *a, const float *b, uint32_t leng
 #ifdef _WINDOWS
     return diskann::CosineSimilarity2<float>(a, b, length);
 #else
-    std::cout << "Distance.cpp_compare3\n";
+    // std::cout << "Distance.cpp_compare3\n";
     float magA = 0, magB = 0, scalarProduct = 0;
     for (uint32_t i = 0; i < length; i++)
     {
@@ -109,7 +109,7 @@ float DistanceCosineFloat::compare(const float *a, const float *b, uint32_t leng
 
 float SlowDistanceCosineUInt8::compare(const uint8_t *a, const uint8_t *b, uint32_t length) const
 {
-    std::cout << "Distance.cpp_compare4\n";
+    // std::cout << "Distance.cpp_compare4\n";
     int magA = 0, magB = 0, scalarProduct = 0;
     for (uint32_t i = 0; i < length; i++)
     {
@@ -160,7 +160,7 @@ float DistanceL2Int8::compare(const int8_t *a, const int8_t *b, uint32_t size) c
 #endif
 #else
     int32_t result = 0;
-    std::cout << "Distance.cpp_compare5\n";
+    // std::cout << "Distance.cpp_compare5\n";
 #pragma omp simd reduction(+ : result) aligned(a, b : 8)
     for (int32_t i = 0; i < (int32_t)size; i++)
     {
@@ -174,7 +174,7 @@ float DistanceL2UInt8::compare(const uint8_t *a, const uint8_t *b, uint32_t size
 {
     uint32_t result = 0;
 #ifndef _WINDOWS
-std::cout << "Distance.cpp_compare6\n";
+// std::cout << "Distance.cpp_compare6\n";
 #pragma omp simd reduction(+ : result) aligned(a, b : 8)
 #endif
     for (int32_t i = 0; i < (int32_t)size; i++)
@@ -187,7 +187,7 @@ std::cout << "Distance.cpp_compare6\n";
 #ifndef _WINDOWS
 float DistanceL2Float::compare(const float *a, const float *b, uint32_t size) const
 {
-    std::cout << "Distance.cpp_compare7\n";
+    // std::cout << "Distance.cpp_compare7\n";
     a = (const float *)__builtin_assume_aligned(a, 32);
     b = (const float *)__builtin_assume_aligned(b, 32);
 #else
@@ -234,7 +234,7 @@ float DistanceL2Float::compare(const float *a, const float *b, uint32_t size) co
 
 template <typename T> float SlowDistanceL2<T>::compare(const T *a, const T *b, uint32_t length) const
 {
-    std::cout << "Distance.cpp_compare8\n";
+    // std::cout << "Distance.cpp_compare8\n";
     float result = 0.0f;
     for (uint32_t i = 0; i < length; i++)
     {
@@ -426,7 +426,7 @@ template <typename T> float DistanceInnerProduct<T>::inner_product(const T *a, c
 
 template <typename T> float DistanceFastL2<T>::compare(const T *a, const T *b, float norm, uint32_t size) const
 {
-    std::cout << "Distance.cpp_compare9\n";
+    // std::cout << "Distance.cpp_compare9\n";
     float result = -2 * DistanceInnerProduct<T>::inner_product(a, b, size);
     result += norm;
     return result;
@@ -535,7 +535,9 @@ template <typename T> float DistanceFastL2<T>::norm(const T *a, uint32_t size) c
 
 float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint32_t size) const
 {
-    std::cout << "Distance.cpp_compare10\n";
+    // std::cout << "Distance.cpp_compare10 (by5osh hena)\n";
+    std::cout << "a[0]: " << a[0] <<  ", a[1]: " << a[1] << std::endl;
+    std::cout << "b[0]: " << b[0] <<  ", b[1]: " << b[1] << std::endl;
     float result = 0.0f;
 #define AVX_DOT(addr1, addr2, dest, tmp1, tmp2)                                                                        \
     tmp1 = _mm256_loadu_ps(addr1);                                                                                     \
