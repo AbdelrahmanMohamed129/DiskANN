@@ -537,7 +537,6 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
 {
     if (dist_cache.find({{a[0],a[1]},{b[0],b[1]}}) != dist_cache.end())
         return dist_cache[{{a[0],a[1]},{b[0],b[1]}}];
-        lolxd
     // std::cout << "Distance.cpp_compare10 (by5osh hena)\n";
     float result = 0.0f;
 #define AVX_DOT(addr1, addr2, dest, tmp1, tmp2)                                                                        \
