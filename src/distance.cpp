@@ -535,10 +535,14 @@ template <typename T> float DistanceFastL2<T>::norm(const T *a, uint32_t size) c
 
 float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint32_t size) const
 {
+    // (3,4) , (6,8): Distance = sqrt(9+16) = 5
+    
     // std::cout << "Distance.cpp_compare10 (by5osh hena)\n";
     // std::cout << "a[0]: " << a[0] <<  ", a[1]: " << a[1] << std::endl;
     // std::cout << "b[0]: " << b[0] <<  ", b[1]: " << b[1] << std::endl;
-    std::cout << "size: " << size << std::endl << "a[size-1], " << a[size-1] << std::endl;
+    // std::cout << "size: " << size << std::endl << "a[size-1], " << a[size-1] << std::endl;
+    std::cout << "a.size: " << sizeof(a) / sizeof(float) << std::endl;
+    std::cout << "b.size: " << sizeof(b) / sizeof(float) << std::endl;
     float result = 0.0f;
 #define AVX_DOT(addr1, addr2, dest, tmp1, tmp2)                                                                        \
     tmp1 = _mm256_loadu_ps(addr1);                                                                                     \
