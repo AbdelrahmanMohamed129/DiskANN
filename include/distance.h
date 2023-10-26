@@ -17,7 +17,7 @@ enum Metric
 template <typename T> class Distance
 {
   public:
-    map<std::pair<std::pair<float,float>,std::pair<float,float>>,float> dist_cache;
+    std::map<std::pair<std::pair<float,float>,std::pair<float,float>>,float> dist_cache;
     DISKANN_DLLEXPORT Distance(diskann::Metric dist_metric) : _distance_metric(dist_metric)
     {
     }
@@ -201,7 +201,7 @@ class AVXDistanceInnerProductFloat : public Distance<float>
     AVXDistanceInnerProductFloat() : Distance<float>(diskann::Metric::INNER_PRODUCT)
     {
     }
-    DISKANN_DLLEXPORT virtual float compare(const float *a, const float *b, uint32_t length) const;
+    DISKANN_DLLEXPORT virtual float compare(const float *a, const float *b, uint32_t length);
 };
 
 class AVXNormalizedCosineDistanceFloat : public Distance<float>

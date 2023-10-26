@@ -13,6 +13,8 @@
 #include "simd_utils.h"
 #include <cosine_similarity.h>
 #include <iostream>
+#include <utility>
+// #include <pair>
 
 #include "distance.h"
 #include "utils.h"
@@ -533,10 +535,17 @@ template <typename T> float DistanceFastL2<T>::norm(const T *a, uint32_t size) c
     return result;
 }
 
-float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint32_t size) const
+float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint32_t size)
 {
-    if (dist_cache.find({{a[0],a[1]},{b[0],b[1]}}) != dist_cache.end())
-        return dist_cache[{{a[0],a[1]},{b[0],b[1]}}];
+    auto distance2 = dist_cache.find({{a[0],a[1]},{b[0],b[1]}});
+    if (distance2 != dist_cache.end())
+    {
+        return distance2->second;
+        // auto x = std::make_pair(a[0],a[1]);
+        // auto y = std::make_pair(b[0],b[1]);
+        // auto z = std::make_pair(x,y);
+        // return dist_cache[z];
+    }
     // std::cout << "Distance.cpp_compare10 (by5osh hena)\n";
     float result = 0.0f;
 #define AVX_DOT(addr1, addr2, dest, tmp1, tmp2)                                                                        \
@@ -574,8 +583,13 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     }
     _mm256_storeu_ps(unpack, sum);
     result = unpack[0] + unpack[1] + unpack[2] + unpack[3] + unpack[4] + unpack[5] + unpack[6] + unpack[7];
-    std::cout << "-result: " << -result << std::endl;
-    return dist_cache[{{a[0],a[1]},{b[0],b[1]}}] = -result;
+    // std::cout << "-result: " << -result << std::endl;
+    // dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
+    auto x = std::make_pair(a[0],a[1]);
+    auto y = std::make_pair(b[0],b[1]);
+    auto z = std::make_pair(x,y);
+    dist_cache.emplace(z, -result);
+    return -result;
 }
 
 uint32_t AVXNormalizedCosineDistanceFloat::post_normalization_dimension(uint32_t orig_dimension) const
