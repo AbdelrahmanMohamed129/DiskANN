@@ -1,6 +1,8 @@
 #pragma once
 #include "windows_customizations.h"
 #include <cstring>
+#include <map>
+
 
 namespace diskann
 {
@@ -15,6 +17,7 @@ enum Metric
 template <typename T> class Distance
 {
   public:
+    map<std::pair<std::pair<float,float>,std::pair<float,float>>,float> dist_cache;
     DISKANN_DLLEXPORT Distance(diskann::Metric dist_metric) : _distance_metric(dist_metric)
     {
     }

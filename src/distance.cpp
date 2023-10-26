@@ -535,14 +535,9 @@ template <typename T> float DistanceFastL2<T>::norm(const T *a, uint32_t size) c
 
 float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint32_t size) const
 {
-    // (3,4) , (6,8): Distance = sqrt(9+16) = 5
-    
+    if (dist_cache.find({{a[0],a[1]},{b[0],b[1]}}) != dist_cache.end())
+        return dist_cache[{{a[0],a[1]},{b[0],b[1]}}];
     // std::cout << "Distance.cpp_compare10 (by5osh hena)\n";
-    // std::cout << "a[0]: " << a[0] <<  ", a[1]: " << a[1] << std::endl;
-    // std::cout << "b[0]: " << b[0] <<  ", b[1]: " << b[1] << std::endl;
-    // std::cout << "size: " << size << std::endl << "a[size-1], " << a[size-1] << std::endl;
-    std::cout << "a.size: " << sizeof(a) / sizeof(float) << std::endl;
-    std::cout << "b.size: " << sizeof(b) / sizeof(float) << std::endl;
     float result = 0.0f;
 #define AVX_DOT(addr1, addr2, dest, tmp1, tmp2)                                                                        \
     tmp1 = _mm256_loadu_ps(addr1);                                                                                     \
@@ -579,8 +574,8 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     }
     _mm256_storeu_ps(unpack, sum);
     result = unpack[0] + unpack[1] + unpack[2] + unpack[3] + unpack[4] + unpack[5] + unpack[6] + unpack[7];
-
-    return -result;
+    std::cout << "-result: " << -result << std::endl;
+    return dist_cache[{{a[0],a[1]},{b[0],b[1]}}] = -result;
 }
 
 uint32_t AVXNormalizedCosineDistanceFloat::post_normalization_dimension(uint32_t orig_dimension) const
