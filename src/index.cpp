@@ -210,6 +210,8 @@ void Index<T, TagT, LabelT>::initialize_query_scratch(uint32_t num_threads, uint
                                                 _data_store->get_alignment_factor(), _pq_dist);
         _query_scratch.push(scratch);
     }
+    std::cout << "size: " << _final_graph.size() << std::endl;          // tl3 10M f3ln
+    std::cout << "aligned_query size(_dim): " << dim << std::endl;     // dh elly tl3 200
 }
 
 template <typename T, typename TagT, typename LabelT> size_t Index<T, TagT, LabelT>::save_tags(std::string tags_file)
@@ -956,6 +958,8 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
     // std::cout << "size: " << _final_graph.size() << std::endl;          // tl3 10M f3ln
     // std::cout << "size[0]: " << _final_graph[0].size() << std::endl;    // tl3 64 (kont expecting 200)
     // std::cout << "aligned_query size(_dim): " << _dim << std::endl;     // dh elly tl3 200
+    // most likely f3ln _final_graph.size dh 7agm el points bta3t el data set kolaha
+    // w _dim dh 7agm el queries el h3mlha kolaha
 
     float *query_float = nullptr;
     float *query_rotated = nullptr;
@@ -1134,7 +1138,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
         else
         {
             assert(dist_scratch.size() == 0);
-            std::cout << "id_scratch size: " << id_scratch.size() << std::endl;
+            // std::cout << "id_scratch size: " << id_scratch.size() << std::endl;  // kol shwya yt8yr
             for (size_t m = 0; m < id_scratch.size(); ++m)
             {
                 uint32_t id = id_scratch[m];
