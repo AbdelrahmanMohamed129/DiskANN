@@ -540,7 +540,6 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     auto distance2 = dist_cache.find({{a[0],a[1]},{b[0],b[1]}});
     if (distance2 != dist_cache.end())
     {
-        std::cout << "LESSSGOOOOO, ez Cache\n";
         return distance2->second;
         // auto x = std::make_pair(a[0],a[1]);
         // auto y = std::make_pair(b[0],b[1]);
