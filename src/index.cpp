@@ -121,6 +121,7 @@ Index<T, TagT, LabelT>::Index(Metric m, const size_t dim, const size_t max_point
             this->_distance.reset((Distance<T> *)get_distance_function<T>(m));
         }
         // Note: moved this to factory, keeping this for backward compatibility.
+        std::cout << "index.cpp 1\n";
         _data_store =
             std::make_unique<diskann::InMemDataStore<T>>((location_t)total_internal_points, _dim, this->_distance);
     }
@@ -1044,6 +1045,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
             }
             else
             {
+                std::cout << "index.cpp 2\n";
                 distance = _data_store->get_distance(aligned_query, id);
             }
             Neighbor nn = Neighbor(id, distance);
@@ -1135,7 +1137,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
                     auto nextn = id_scratch[m + 1];
                     _data_store->prefetch_vector(nextn);
                 }
-
+                std::cout << "index.cpp 3\n";
                 dist_scratch.push_back(_data_store->get_distance(aligned_query, id));
             }
         }
@@ -1267,7 +1269,7 @@ void Index<T, TagT, LabelT>::occlude_list(const uint32_t location, std::vector<N
                 }
                 if (!prune_allowed)
                     continue;
-
+                std::cout << "index.cpp 4\n";
                 float djk = _data_store->get_distance(iter2->id, iter->id);
                 if (_dist_metric == diskann::Metric::L2 || _dist_metric == diskann::Metric::COSINE)
                 {
@@ -1314,6 +1316,7 @@ void Index<T, TagT, LabelT>::prune_neighbors(const uint32_t location, std::vecto
     // If using _pq_build, over-write the PQ distances with actual distances
     if (_pq_dist)
     {
+        std::cout << "index.cpp 5\n";
         for (auto &ngh : pool)
             ngh.distance = _data_store->get_distance(ngh.id, location);
     }
@@ -1387,6 +1390,7 @@ void Index<T, TagT, LabelT>::inter_insert(uint32_t n, std::vector<uint32_t> &pru
             {
                 if (dummy_visited.find(cur_nbr) == dummy_visited.end() && cur_nbr != des)
                 {
+                    std::cout << "index.cpp 6\n";
                     float dist = _data_store->get_distance(des, cur_nbr);
                     dummy_pool.emplace_back(Neighbor(cur_nbr, dist));
                     dummy_visited.insert(cur_nbr);
@@ -1508,6 +1512,7 @@ void Index<T, TagT, LabelT>::link(const IndexWriteParameters &parameters)
             {
                 if (dummy_visited.find(cur_nbr) == dummy_visited.end() && cur_nbr != node)
                 {
+                    std::cout << "index.cpp 7\n";
                     float dist = _data_store->get_distance(node, cur_nbr);
                     dummy_pool.emplace_back(Neighbor(cur_nbr, dist));
                     dummy_visited.insert(cur_nbr);
@@ -1554,6 +1559,7 @@ void Index<T, TagT, LabelT>::prune_all_neighbors(const uint32_t max_degree, cons
                 {
                     if (dummy_visited.find(cur_nbr) == dummy_visited.end() && cur_nbr != node)
                     {
+                        std::cout << "index.cpp 8\n";
                         float dist = _data_store->get_distance((location_t)node, (location_t)cur_nbr);
                         dummy_pool.emplace_back(Neighbor(cur_nbr, dist));
                         dummy_visited.insert(cur_nbr);
@@ -2511,6 +2517,7 @@ inline void Index<T, TagT, LabelT>::process_delete(const tsl::robin_set<uint32_t
         {
             // Create a pool of Neighbor candidates from the expanded_nodes_set
             expanded_nghrs_vec.reserve(expanded_nodes_set.size());
+            std::cout << "index.cpp 9\n";
             for (auto &ngh : expanded_nodes_set)
             {
                 expanded_nghrs_vec.emplace_back(ngh, _data_store->get_distance((location_t)loc, (location_t)ngh));
