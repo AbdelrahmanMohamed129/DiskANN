@@ -585,7 +585,7 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     result = unpack[0] + unpack[1] + unpack[2] + unpack[3] + unpack[4] + unpack[5] + unpack[6] + unpack[7];
     // std::cout << "-result: " << -result << std::endl;
     // 5odo b probability ( ( el cache size / el 10^14 ) * 2 ) mthln aw 5% mthln
-    if (dist_cache.size() < (10^9))
+    if (dist_cache.size() < (1e8))
         dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
         if (dist_cache.size() > (10^7))
             std::cout << "cache size: " << dist_cache.size() << std::endl;
