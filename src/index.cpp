@@ -955,7 +955,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
     // aligned_query dlw2ty fyha kol el points elly hyes2al 3leha bayen
     // std::cout << "size: " << _final_graph.size() << std::endl;          // tl3 10M f3ln
     // std::cout << "size[0]: " << _final_graph[0].size() << std::endl;    // tl3 64 (kont expecting 200)
-    std::cout << "aligned_query size(_dim): " << _dim << std::endl;
+    // std::cout << "aligned_query size(_dim): " << _dim << std::endl;     // dh elly tl3 200
 
     float *query_float = nullptr;
     float *query_rotated = nullptr;
@@ -1134,6 +1134,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
         else
         {
             assert(dist_scratch.size() == 0);
+            std::cout << "id_scratch size: " << id_scratch.size() << std::endl;
             for (size_t m = 0; m < id_scratch.size(); ++m)
             {
                 uint32_t id = id_scratch[m];
