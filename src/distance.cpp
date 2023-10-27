@@ -537,6 +537,7 @@ template <typename T> float DistanceFastL2<T>::norm(const T *a, uint32_t size) c
 
 float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint32_t size) const
 {
+    std::cout << "Hyedrab error hena 1?\n";
     auto distance2 = dist_cache.find({{a[0],a[1]},{b[0],b[1]}});
     if (distance2 != dist_cache.end())
     {
@@ -548,6 +549,7 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     }
     // std::cout << "Distance.cpp_compare10 (by5osh hena)\n";
     float result = 0.0f;
+    std::cout << "Hyedrab error hena 2?\n";
 #define AVX_DOT(addr1, addr2, dest, tmp1, tmp2)                                                                        \
     tmp1 = _mm256_loadu_ps(addr1);                                                                                     \
     tmp2 = _mm256_loadu_ps(addr2);                                                                                     \
@@ -585,12 +587,14 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     result = unpack[0] + unpack[1] + unpack[2] + unpack[3] + unpack[4] + unpack[5] + unpack[6] + unpack[7];
     // std::cout << "-result: " << -result << std::endl;
     // 5odo b probability ( ( el cache size / el 10^14 ) * 2 ) mthln aw 5% mthln
+    std::cout << "Hyedrab error hena 3?\n";
     if (dist_cache.size() < (10^9))
         dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
     // auto x = std::make_pair(a[0],a[1]);
     // auto y = std::make_pair(b[0],b[1]);
     // auto z = std::make_pair(x,y);
     // dist_cache.emplace(z, -result);
+    std::cout << "Hyedrab error hena 4?\n";
     return -result;
 }
 
