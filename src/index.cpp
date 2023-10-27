@@ -953,8 +953,9 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
 
     T *aligned_query = scratch->aligned_query();
     // aligned_query dlw2ty fyha kol el points elly hyes2al 3leha bayen
-    std::cout << "size: " << _final_graph.size() << std::endl;
-    std::cout << "size[0]: " << _final_graph[0].size() << std::endl;
+    // std::cout << "size: " << _final_graph.size() << std::endl;          // tl3 10M f3ln
+    // std::cout << "size[0]: " << _final_graph[0].size() << std::endl;    // tl3 64 (kont expecting 200)
+    std::cout << "aligned_query size: " << sizeof(aligned_query) / sizeof(T) << std::endl; // tl3 8
 
     float *query_float = nullptr;
     float *query_rotated = nullptr;
