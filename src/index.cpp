@@ -124,6 +124,8 @@ Index<T, TagT, LabelT>::Index(Metric m, const size_t dim, const size_t max_point
         std::cout << "index.cpp 1 (by5osh hena mara fl awl abl el querying)\n";
         _data_store =
             std::make_unique<diskann::InMemDataStore<T>>((location_t)total_internal_points, _dim, this->_distance);
+        // printing _data_store size
+        // std::cout << _data_store->size() << std::endl;
     }
 
     _locks = std::vector<non_recursive_mutex>(total_internal_points);
@@ -950,6 +952,9 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
     // }
 
     T *aligned_query = scratch->aligned_query();
+    // aligned_query dlw2ty fyha kol el points elly hyes2al 3leha bayen
+    std::cout << "size: " << _final_graph.size() << std::endl;
+    std::cout << "size[0]: " << _final_graph[0].size() << std::endl;
 
     float *query_float = nullptr;
     float *query_rotated = nullptr;
