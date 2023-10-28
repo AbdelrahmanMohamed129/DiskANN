@@ -1184,7 +1184,7 @@ void Index<T, TagT, LabelT>::search_for_point_and_prune(int location, uint32_t L
 {
     const std::vector<uint32_t> init_ids = get_init_ids();
     const std::vector<LabelT> unused_filter_label;
-    std::cout << "index.cpp - search_for_point_and_prune\n";
+    // std::cout << "index.cpp - search_for_point_and_prune\n";
     if (!use_filter)
     {
         _data_store->get_vector(location, scratch->aligned_query());
@@ -2195,7 +2195,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::search(const T *query, con
     std::shared_lock<std::shared_timed_mutex> lock(_update_lock);
 
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
-    std::cout << "index.cpp - search\n";
+    std::cout << "index.cpp - search (by5osh hena)\n";
     auto retval =
         iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, false, unused_filter_label, true);
 
@@ -2298,7 +2298,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::search_with_filters(const 
     // T *aligned_query = scratch->aligned_query();
     // memcpy(aligned_query, query, _dim * sizeof(T));
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
-    std::cout << "index.cpp - search_with_filters \n";
+    // std::cout << "index.cpp - search_with_filters \n";
     auto retval = iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, true, filter_vec, true);
 
     auto best_L_nodes = scratch->best_l_nodes();
@@ -2378,7 +2378,7 @@ size_t Index<T, TagT, LabelT>::search_with_tags(const T *query, const uint64_t K
     const std::vector<LabelT> unused_filter_label;
 
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
-    std::cout << "index.cpp - search_with_tags \n";
+    // std::cout << "index.cpp - search_with_tags \n";
     iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, false, unused_filter_label, true);
 
     NeighborPriorityQueue &best_L_nodes = scratch->best_l_nodes();
