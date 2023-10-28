@@ -178,7 +178,6 @@ template <typename data_t> void InMemDataStore<data_t>::prefetch_vector(const lo
 
 template <typename data_t> float InMemDataStore<data_t>::get_distance(const data_t *query, const location_t loc) const
 {
-    // std::cout << "Get_Distance_1 (by5osh hena)\n";
     return _distance_fn->compare(query, _data + _aligned_dim * loc, (uint32_t)_aligned_dim);
 }
 
@@ -186,7 +185,6 @@ template <typename data_t>
 void InMemDataStore<data_t>::get_distance(const data_t *query, const location_t *locations,
                                           const uint32_t location_count, float *distances) const
 {
-    // std::cout << "Get_Distance_2\n";
     for (location_t i = 0; i < location_count; i++)
     {
         distances[i] = _distance_fn->compare(query, _data + locations[i] * _aligned_dim, (uint32_t)this->_aligned_dim);
@@ -196,7 +194,6 @@ void InMemDataStore<data_t>::get_distance(const data_t *query, const location_t 
 template <typename data_t>
 float InMemDataStore<data_t>::get_distance(const location_t loc1, const location_t loc2) const
 {
-    // std::cout << "Get_Distance_3\n";
     return _distance_fn->compare(_data + loc1 * _aligned_dim, _data + loc2 * _aligned_dim,
                                  (uint32_t)this->_aligned_dim);
 }
