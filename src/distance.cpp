@@ -546,7 +546,7 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
         // auto z = std::make_pair(x,y);
         // return dist_cache[z];
     }
-    // std::cout << "Distance.cpp_compare10 (by5osh hena)\n";
+    std::cout << "Distance.cpp_compare10 (by5osh hena)\n";
     float result = 0.0f;
 #define AVX_DOT(addr1, addr2, dest, tmp1, tmp2)                                                                        \
     tmp1 = _mm256_loadu_ps(addr1);                                                                                     \
