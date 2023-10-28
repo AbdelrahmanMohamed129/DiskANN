@@ -121,7 +121,7 @@ Index<T, TagT, LabelT>::Index(Metric m, const size_t dim, const size_t max_point
             this->_distance.reset((Distance<T> *)get_distance_function<T>(m));
         }
         // Note: moved this to factory, keeping this for backward compatibility.
-        std::cout << "index.cpp 1 (by5osh hena mara fl awl abl el querying)\n";
+        // std::cout << "index.cpp 1 (by5osh hena mara fl awl abl el querying)\n";
         _data_store =
             std::make_unique<diskann::InMemDataStore<T>>((location_t)total_internal_points, _dim, this->_distance);
         // printing _data_store size
@@ -215,7 +215,7 @@ void Index<T, TagT, LabelT>::initialize_query_scratch(uint32_t num_threads, uint
     // tl3t f3ln kda, w kol wa7da etaba3et mara wa7da bs abl el querying. 8albn kda hne7seb hena el distance w n3mlha caching
     // nested for loop b2a w ez
 
-    std::cout << "Num_threads: " << num_threads << std::endl;
+    // std::cout << "Num_threads: " << num_threads << std::endl;
     // T *aligned_query = scratch->aligned_query();
     // for (auto i = 0; i < _final_graph.size(); i++)
     // {
@@ -1967,7 +1967,7 @@ void Index<T, TagT, LabelT>::build(const std::string &data_file, const size_t nu
                                    build_params.index_write_params);
     }
     std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - s;
-    std::cout << "Indexing time: " << diff.count() << "\n";
+    // std::cout << "Indexing time: " << diff.count() << "\n";
     // cleanup
     if (build_params.label_file != "")
     {
@@ -2195,7 +2195,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::search(const T *query, con
     std::shared_lock<std::shared_timed_mutex> lock(_update_lock);
 
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
-    std::cout << "index.cpp - search (by5osh hena)\n";
+    // std::cout << "index.cpp - search (by5osh hena)\n";
     auto retval =
         iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, false, unused_filter_label, true);
 
