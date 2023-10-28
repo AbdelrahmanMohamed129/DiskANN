@@ -1184,7 +1184,7 @@ void Index<T, TagT, LabelT>::search_for_point_and_prune(int location, uint32_t L
 {
     const std::vector<uint32_t> init_ids = get_init_ids();
     const std::vector<LabelT> unused_filter_label;
-    std::cout << "index.cpp - search_for_point_and_prune\n"
+    std::cout << "index.cpp - search_for_point_and_prune\n";
     if (!use_filter)
     {
         _data_store->get_vector(location, scratch->aligned_query());
