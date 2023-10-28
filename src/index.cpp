@@ -214,14 +214,16 @@ void Index<T, TagT, LabelT>::initialize_query_scratch(uint32_t num_threads, uint
     // std::cout << "aligned_query size(_dim): " << dim << std::endl;      // dh elly tl3 200
     // tl3t f3ln kda, w kol wa7da etaba3et mara wa7da bs abl el querying. 8albn kda hne7seb hena el distance w n3mlha caching
     // nested for loop b2a w ez
-    T *aligned_query = scratch->aligned_query();
-    for (auto i = 0; i < _final_graph.size(); i++)
-    {
-        for (auto j = 0; j < dim; j++)
-        {
-            _data_store->get_distance(aligned_query[j], _final_graph[i])
-        }
-    }
+
+    std::cout << "Num_threads: " << num_threads << std::endl;
+    // T *aligned_query = scratch->aligned_query();
+    // for (auto i = 0; i < _final_graph.size(); i++)
+    // {
+    //     for (auto j = 0; j < dim; j++)
+    //     {
+    //         _data_store->get_distance(aligned_query[j], _final_graph[i])
+    //     }
+    // }
 
 }
 
@@ -1182,7 +1184,7 @@ void Index<T, TagT, LabelT>::search_for_point_and_prune(int location, uint32_t L
 {
     const std::vector<uint32_t> init_ids = get_init_ids();
     const std::vector<LabelT> unused_filter_label;
-
+    std::cout << "index.cpp - search_for_point_and_prune\n"
     if (!use_filter)
     {
         _data_store->get_vector(location, scratch->aligned_query());
@@ -2193,6 +2195,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::search(const T *query, con
     std::shared_lock<std::shared_timed_mutex> lock(_update_lock);
 
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
+    std::cout << "index.cpp - search\n";
     auto retval =
         iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, false, unused_filter_label, true);
 
