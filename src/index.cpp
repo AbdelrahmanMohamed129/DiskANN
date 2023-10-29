@@ -133,19 +133,24 @@ Index<T, TagT, LabelT>::Index(Metric m, const size_t dim, const size_t max_point
         _tag_to_location.reserve(total_internal_points);
     }
 
+    int n = 0;
     std::cout << "momkn a3ml el cache hena" << std::endl;
+    // m7tag bs ageeb el n, el n el mfrood = nbr.id, w dh byegy mn el closest unexpanded nodes, 7aga btet7eseb 2odam asln
     std::cout << "size: " << _final_graph.size() << std::endl;          // tl3 10M f3ln
+    std::cout << "graph[n]: " << _final_graph[n].size() << std::endl;   
     // std::cout << "aligned_query size(_dim): " << dim << std::endl;      // dh elly tl3 200
     // tl3t f3ln kda, w kol wa7da etaba3et mara wa7da bs abl el querying. 8albn kda hne7seb hena el distance w n3mlha caching
     // nested for loop b2a w ez
-
     // std::cout << "Num_threads: " << num_threads << std::endl;
     // T *aligned_query = scratch->aligned_query();
+
+
+
     // for (long unsigned int i = 0; i < _final_graph.size(); i++)
     // {
     //     for (long unsigned int j = 0; j < _final_graph.size(); j++)
     //     {
-    //         _data_store->get_distance(_final_graph[j], _final_graph[i]);
+    //         _data_store->get_distance(_final_graph[n][j], _final_graph[n][i]);
     //     }
     // }
 }
@@ -1075,7 +1080,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
             }
             else
             {
-                std::cout << "get distance 1\n" ;
+                // std::cout << "get distance 1\n" ;
                 distance = _data_store->get_distance(aligned_query, id);
             }
             Neighbor nn = Neighbor(id, distance);
@@ -1167,7 +1172,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
                     auto nextn = id_scratch[m + 1];
                     _data_store->prefetch_vector(nextn);
                 }
-                std::cout << "get distance 2\n" ;
+                // std::cout << "get distance 2\n (by5osh hena)" ;
                 dist_scratch.push_back(_data_store->get_distance(aligned_query, id));
             }
         }
@@ -1298,7 +1303,7 @@ void Index<T, TagT, LabelT>::occlude_list(const uint32_t location, std::vector<N
                 }
                 if (!prune_allowed)
                     continue;
-                std::cout << "get distance 3\n" ;
+                // std::cout << "get distance 3\n" ;
                 float djk = _data_store->get_distance(iter2->id, iter->id);
                 if (_dist_metric == diskann::Metric::L2 || _dist_metric == diskann::Metric::COSINE)
                 {
@@ -1345,7 +1350,7 @@ void Index<T, TagT, LabelT>::prune_neighbors(const uint32_t location, std::vecto
     // If using _pq_build, over-write the PQ distances with actual distances
     if (_pq_dist)
     {
-        std::cout << "get distance 4\n" ;
+        // std::cout << "get distance 4\n" ;
         for (auto &ngh : pool)
             ngh.distance = _data_store->get_distance(ngh.id, location);
     }
@@ -1419,7 +1424,7 @@ void Index<T, TagT, LabelT>::inter_insert(uint32_t n, std::vector<uint32_t> &pru
             {
                 if (dummy_visited.find(cur_nbr) == dummy_visited.end() && cur_nbr != des)
                 {
-                    std::cout << "get distance 5\n" ;
+                    // std::cout << "get distance 5\n" ;
                     float dist = _data_store->get_distance(des, cur_nbr);
                     dummy_pool.emplace_back(Neighbor(cur_nbr, dist));
                     dummy_visited.insert(cur_nbr);
@@ -1541,7 +1546,7 @@ void Index<T, TagT, LabelT>::link(const IndexWriteParameters &parameters)
             {
                 if (dummy_visited.find(cur_nbr) == dummy_visited.end() && cur_nbr != node)
                 {
-                    std::cout << "get distance 6\n" ;
+                    // std::cout << "get distance 6\n" ;
                     float dist = _data_store->get_distance(node, cur_nbr);
                     dummy_pool.emplace_back(Neighbor(cur_nbr, dist));
                     dummy_visited.insert(cur_nbr);
@@ -1588,7 +1593,7 @@ void Index<T, TagT, LabelT>::prune_all_neighbors(const uint32_t max_degree, cons
                 {
                     if (dummy_visited.find(cur_nbr) == dummy_visited.end() && cur_nbr != node)
                     {
-                        std::cout << "get distance 7\n" ;
+                        // std::cout << "get distance 7\n" ;
                         float dist = _data_store->get_distance((location_t)node, (location_t)cur_nbr);
                         dummy_pool.emplace_back(Neighbor(cur_nbr, dist));
                         dummy_visited.insert(cur_nbr);
@@ -2547,7 +2552,7 @@ inline void Index<T, TagT, LabelT>::process_delete(const tsl::robin_set<uint32_t
             expanded_nghrs_vec.reserve(expanded_nodes_set.size());
             for (auto &ngh : expanded_nodes_set)
             {
-                std::cout << "get distance 8\n" ;
+                // std::cout << "get distance 8\n" ;
                 expanded_nghrs_vec.emplace_back(ngh, _data_store->get_distance((location_t)loc, (location_t)ngh));
             }
             std::sort(expanded_nghrs_vec.begin(), expanded_nghrs_vec.end());
