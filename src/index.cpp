@@ -1768,7 +1768,8 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     for (size_t i = 0; i < _nd; i++)
     {
         auto &pool = _final_graph[i];
-        std::cout << "_final_graph[" << i << "].size(): " << _final_graph[i].size() << std::endl;
+        if (i < 20 || i > _nd - 20)
+            std::cout << "_final_graph[" << i << "].size(): " << _final_graph[i].size() << std::endl;
         max = std::max(max, pool.size());
         min = std::min(min, pool.size());
         total += pool.size();
