@@ -132,6 +132,22 @@ Index<T, TagT, LabelT>::Index(Metric m, const size_t dim, const size_t max_point
         _location_to_tag.reserve(total_internal_points);
         _tag_to_location.reserve(total_internal_points);
     }
+
+    std::cout << "momkn a3ml el cache hena" << std::endl;
+    std::cout << "size: " << _final_graph.size() << std::endl;          // tl3 10M f3ln
+    // std::cout << "aligned_query size(_dim): " << dim << std::endl;      // dh elly tl3 200
+    // tl3t f3ln kda, w kol wa7da etaba3et mara wa7da bs abl el querying. 8albn kda hne7seb hena el distance w n3mlha caching
+    // nested for loop b2a w ez
+
+    // std::cout << "Num_threads: " << num_threads << std::endl;
+    // T *aligned_query = scratch->aligned_query();
+    for (auto i = 0; i < _final_graph.size(); i++)
+    {
+        for (auto j = 0; j < _final_graph.size(); j++)
+        {
+            _data_store->get_distance(_final_graph[j], _final_graph[i])
+        }
+    }
 }
 
 template <typename T, typename TagT, typename LabelT>
@@ -207,6 +223,21 @@ void Index<T, TagT, LabelT>::initialize_query_scratch(uint32_t num_threads, uint
                                                 _data_store->get_alignment_factor(), _pq_dist);
         _query_scratch.push(scratch);
     }
+
+    // std::cout << "size: " << _final_graph.size() << std::endl;          // tl3 10M f3ln
+    // std::cout << "aligned_query size(_dim): " << dim << std::endl;      // dh elly tl3 200
+    // tl3t f3ln kda, w kol wa7da etaba3et mara wa7da bs abl el querying. 8albn kda hne7seb hena el distance w n3mlha caching
+    // nested for loop b2a w ez
+
+    // std::cout << "Num_threads: " << num_threads << std::endl;
+    // T *aligned_query = scratch->aligned_query();
+    // for (auto i = 0; i < _final_graph.size(); i++)
+    // {
+    //     for (auto j = 0; j < dim; j++)
+    //     {
+    //         _data_store->get_distance(aligned_query[j], _final_graph[i])
+    //     }
+    // }
 }
 
 template <typename T, typename TagT, typename LabelT> size_t Index<T, TagT, LabelT>::save_tags(std::string tags_file)
