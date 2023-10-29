@@ -1503,13 +1503,13 @@ void Index<T, TagT, LabelT>::link(const IndexWriteParameters &parameters)
         std::vector<uint32_t> pruned_list;
         if (_filtered_index)
         {
-            std::cout << "index.cpp: link: search_for_point_and_prune 1\n";
+            // std::cout << "index.cpp: link: search_for_point_and_prune 1\n";
             search_for_point_and_prune(node, _indexingQueueSize, pruned_list, scratch, _filtered_index,
                                        _filterIndexingQueueSize);
         }
         else
         {
-            std::cout << "index.cpp: link: search_for_point_and_prune 2\n";
+            // std::cout << "index.cpp: link: search_for_point_and_prune 2 (by5osh hena)\n";
             search_for_point_and_prune(node, _indexingQueueSize, pruned_list, scratch);
         }
         {
@@ -1742,13 +1742,33 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     }
 
     generate_frozen_point();
-    std::cout << "Link mn gowa build_with_data_populated\n";
+    // std::cout << "Link mn gowa build_with_data_populated (by5osh hena mara wa7da bs)\n";
     link(parameters);
+
+
+    // std::cout << "aligned_query size(_dim): " << dim << std::endl;      // dh elly tl3 200
+    // tl3t f3ln kda, w kol wa7da etaba3et mara wa7da bs abl el querying. 8albn kda hne7seb hena el distance w n3mlha caching
+    // nested for loop b2a w ez
+    // std::cout << "Num_threads: " << num_threads << std::endl;
+    // T *aligned_query = scratch->aligned_query();
+
+
+
+    // for (long unsigned int i = 0; i < _final_graph.size(); i++)
+    // {
+    //     for (long unsigned int j = 0; j < _final_graph.size(); j++)
+    //     {
+    //         _data_store->get_distance(_final_graph[n][j], _final_graph[n][i]);
+    //     }
+    // }
+    std::cout << "_nd: " << _nd << std::endl;
+    std::cout << "_final_graph.size(): " << _final_graph.size() << std::endl;
 
     size_t max = 0, min = SIZE_MAX, total = 0, cnt = 0;
     for (size_t i = 0; i < _nd; i++)
     {
         auto &pool = _final_graph[i];
+        std::cout << "_final_graph[" << i << "].size(): " << _final_graph[i].size() << std::endl;
         max = std::max(max, pool.size());
         min = std::min(min, pool.size());
         total += pool.size();
@@ -3065,12 +3085,12 @@ int Index<T, TagT, LabelT>::insert_point(const T *point, const TagT tag)
     std::vector<uint32_t> pruned_list;
     if (_filtered_index)
     {
-        std::cout << "insert_point 1 \n";
+        // std::cout << "insert_point 1 \n";
         search_for_point_and_prune(location, _indexingQueueSize, pruned_list, scratch, true, _filterIndexingQueueSize);
     }
     else
     {
-        std::cout << "insert_point 2 \n";
+        // std::cout << "insert_point 2 \n";
         search_for_point_and_prune(location, _indexingQueueSize, pruned_list, scratch);
     }
     {
