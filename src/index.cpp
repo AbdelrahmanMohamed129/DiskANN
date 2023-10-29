@@ -145,7 +145,7 @@ Index<T, TagT, LabelT>::Index(Metric m, const size_t dim, const size_t max_point
     {
         for (auto j = 0; j < _final_graph.size(); j++)
         {
-            _data_store->get_distance(_final_graph[j], _final_graph[i])
+            _data_store->get_distance(_final_graph[j], _final_graph[i]);
         }
     }
 }
