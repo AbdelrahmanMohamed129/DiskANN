@@ -141,9 +141,9 @@ Index<T, TagT, LabelT>::Index(Metric m, const size_t dim, const size_t max_point
 
     // std::cout << "Num_threads: " << num_threads << std::endl;
     // T *aligned_query = scratch->aligned_query();
-    for (auto i = 0; i < _final_graph.size(); i++)
+    for (long unsigned int i = 0; i < _final_graph.size(); i++)
     {
-        for (auto j = 0; j < _final_graph.size(); j++)
+        for (long unsigned int j = 0; j < _final_graph.size(); j++)
         {
             _data_store->get_distance(_final_graph[j], _final_graph[i]);
         }
