@@ -1197,7 +1197,7 @@ void Index<T, TagT, LabelT>::search_for_point_and_prune(int location, uint32_t L
     if (!use_filter)
     {
         _data_store->get_vector(location, scratch->aligned_query());
-        std::cout << "index.cpp: search_for_point_and_prune: iterate_to_fixed_point 1\n";
+        // std::cout << "index.cpp: search_for_point_and_prune: iterate_to_fixed_point 1 (by5osh hena)\n";
         iterate_to_fixed_point(scratch->aligned_query(), Lindex, init_ids, scratch, false, unused_filter_label, false);
     }
     else
@@ -1207,7 +1207,7 @@ void Index<T, TagT, LabelT>::search_for_point_and_prune(int location, uint32_t L
             filter_specific_start_nodes.emplace_back(_label_to_medoid_id[x]);
 
         _data_store->get_vector(location, scratch->aligned_query());
-        std::cout << "index.cpp: search_for_point_and_prune: iterate_to_fixed_point 2\n";
+        // std::cout << "index.cpp: search_for_point_and_prune: iterate_to_fixed_point 2\n";
         iterate_to_fixed_point(scratch->aligned_query(), filteredLindex, filter_specific_start_nodes, scratch, true,
                                _pts_to_labels[location], false);
     }
@@ -1503,11 +1503,13 @@ void Index<T, TagT, LabelT>::link(const IndexWriteParameters &parameters)
         std::vector<uint32_t> pruned_list;
         if (_filtered_index)
         {
+            std::cout << "index.cpp: link: search_for_point_and_prune 1\n";
             search_for_point_and_prune(node, _indexingQueueSize, pruned_list, scratch, _filtered_index,
                                        _filterIndexingQueueSize);
         }
         else
         {
+            std::cout << "index.cpp: link: search_for_point_and_prune 2\n";
             search_for_point_and_prune(node, _indexingQueueSize, pruned_list, scratch);
         }
         {
@@ -2205,7 +2207,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::search(const T *query, con
     std::shared_lock<std::shared_timed_mutex> lock(_update_lock);
 
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
-    std::cout << "index.cpp: search: iterate_to_fixed_point 3\n";
+    // std::cout << "index.cpp: search: iterate_to_fixed_point 3\n";
     auto retval =
         iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, false, unused_filter_label, true);
 
@@ -2308,7 +2310,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::search_with_filters(const 
     // T *aligned_query = scratch->aligned_query();
     // memcpy(aligned_query, query, _dim * sizeof(T));
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
-    std::cout << "index.cpp: search_with_filters: iterate_to_fixed_point 4\n";
+    // std::cout << "index.cpp: search_with_filters: iterate_to_fixed_point 4\n";
     auto retval = iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, true, filter_vec, true);
 
     auto best_L_nodes = scratch->best_l_nodes();
@@ -2388,7 +2390,7 @@ size_t Index<T, TagT, LabelT>::search_with_tags(const T *query, const uint64_t K
     const std::vector<LabelT> unused_filter_label;
 
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
-    std::cout << "index.cpp: search_with_tags: iterate_to_fixed_point 5\n";
+    // std::cout << "index.cpp: search_with_tags: iterate_to_fixed_point 5\n";
     iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, false, unused_filter_label, true);
 
     NeighborPriorityQueue &best_L_nodes = scratch->best_l_nodes();
@@ -3062,10 +3064,12 @@ int Index<T, TagT, LabelT>::insert_point(const T *point, const TagT tag)
     std::vector<uint32_t> pruned_list;
     if (_filtered_index)
     {
+        std::cout << "insert_point 1 \n";
         search_for_point_and_prune(location, _indexingQueueSize, pruned_list, scratch, true, _filterIndexingQueueSize);
     }
     else
     {
+        std::cout << "insert_point 2 \n";
         search_for_point_and_prune(location, _indexingQueueSize, pruned_list, scratch);
     }
     {
