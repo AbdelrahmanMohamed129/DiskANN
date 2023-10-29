@@ -133,11 +133,19 @@ Index<T, TagT, LabelT>::Index(Metric m, const size_t dim, const size_t max_point
         _tag_to_location.reserve(total_internal_points);
     }
 
-    int n = 0;
+    // NeighborPriorityQueue &best_L_nodes = scratch->best_l_nodes();
+    // best_L_nodes.reserve(Lsize);
+
+    // auto nbr = best_L_nodes.closest_unexpanded();
+    // auto n = nbr.id;
     std::cout << "momkn a3ml el cache hena" << std::endl;
     // m7tag bs ageeb el n, el n el mfrood = nbr.id, w dh byegy mn el closest unexpanded nodes, 7aga btet7eseb 2odam asln
     std::cout << "size: " << _final_graph.size() << std::endl;          // tl3 10M f3ln
-    std::cout << "graph[n]: " << _final_graph[n].size() << std::endl;   
+    for(long unsigned int i = 0; i < _final_graph.size(); i++ )
+    {
+        std::cout << "graph[" << i << "]: " << _final_graph[i].size() << std::endl;   
+        
+    }
     // std::cout << "aligned_query size(_dim): " << dim << std::endl;      // dh elly tl3 200
     // tl3t f3ln kda, w kol wa7da etaba3et mara wa7da bs abl el querying. 8albn kda hne7seb hena el distance w n3mlha caching
     // nested for loop b2a w ez
