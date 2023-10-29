@@ -1742,6 +1742,7 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     }
 
     generate_frozen_point();
+    std::cout << "Link mn gowa build_with_data_populated\n";
     link(parameters);
 
     size_t max = 0, min = SIZE_MAX, total = 0, cnt = 0;
