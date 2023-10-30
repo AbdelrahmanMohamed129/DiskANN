@@ -1778,7 +1778,7 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
                     // std::cout << "Type of _final_graph[i][y]: " << typeid(_final_graph[i][y]).name() << std::endl;
                     if (cached_size > (max_cache_size))    
                         break;
-                    if(rand() % 100 < 50)
+                    // if(rand() % 100 < 2)
                     {
                         cached_size++;
                         // std::cout << "Inserting into cache start\n";
