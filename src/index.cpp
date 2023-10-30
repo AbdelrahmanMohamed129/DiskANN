@@ -1702,27 +1702,27 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     // long long cached_size = 0;
     // long long max_cache_size = 1e7;
     // std::cout << "Start Caching..." << std::endl;
-    // size_t max = 0, min = SIZE_MAX, total = 0, cnt = 0;
-    // for (size_t i = 0; i < _nd; i++)
-    // {
-    //     if (cached_size < max_cache_size)
-    //     {
-    //         for (long unsigned int x = 0; x < _final_graph[i].size(); x++)
-    //         {
-    //             for (long unsigned int y = 0; y < _final_graph[i].size(); y++)
-    //             {
-    //                 if (cached_size > (max_cache_size))    
-    //                     break;
-    //                 if(rand() % 100 < 2)
-    //                 {
-    //                     cached_size++;
-    //                     _data_store->get_distance(_final_graph[i][y], _final_graph[i][x]);
-    //                 }
-    //             }
-    //             if (cached_size > (max_cache_size))    
-    //                     break;
-    //         }
-    //     }
+    size_t max = 0, min = SIZE_MAX, total = 0, cnt = 0;
+    for (size_t i = 0; i < _nd; i++)
+    {
+        // if (cached_size < max_cache_size)
+        // {
+        //     for (long unsigned int x = 0; x < _final_graph[i].size(); x++)
+        //     {
+        //         for (long unsigned int y = 0; y < _final_graph[i].size(); y++)
+        //         {
+        //             if (cached_size > (max_cache_size))    
+        //                 break;
+        //             if(rand() % 100 < 2)
+        //             {
+        //                 cached_size++;
+        //                 _data_store->get_distance(_final_graph[i][y], _final_graph[i][x]);
+        //             }
+        //         }
+        //         if (cached_size > (max_cache_size))    
+        //                 break;
+        //     }
+        // }
         auto &pool = _final_graph[i];
         max = std::max(max, pool.size());
         min = std::min(min, pool.size());
