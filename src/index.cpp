@@ -1767,11 +1767,11 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     size_t max = 0, min = SIZE_MAX, total = 0, cnt = 0;
     for (size_t i = 0; i < _nd; i++)
     {
-        for (long unsigned int i = 0; i < _final_graph.size(); i++)
+        for (long unsigned int n = 0; n < _final_graph.size(); n++)
         {
             for (long unsigned int j = 0; j < _final_graph.size(); j++)
             {
-                _data_store->get_distance(_final_graph[n][j], _final_graph[n][i]);
+                _data_store->get_distance(_final_graph[i][j], _final_graph[i][n]);
             }
         }
         auto &pool = _final_graph[i];
