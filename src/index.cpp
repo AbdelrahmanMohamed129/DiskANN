@@ -1798,7 +1798,7 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
         if (pool.size() < 2)
             cnt++;
     }
-    std::cout << "Cache size: " << cached_size << std::endl;
+    // std::cout << "Cache size: " << cached_size << std::endl;
     diskann::cout << "Index built with degree: max:" << max << "  avg:" << (float)total / (float)(_nd + _num_frozen_pts)
                   << "  min:" << min << "  count(deg<2):" << cnt << std::endl;
 

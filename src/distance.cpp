@@ -532,7 +532,7 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     auto distance2 = dist_cache.find({{a[0],a[1]},{b[0],b[1]}});
     if (distance2 != dist_cache.end())
     {
-        std::cout << "This distance is being read from cache\n";
+        // std::cout << "This distance is being read from cache\n";
         return distance2->second;
     }
     float result = 0.0f;
