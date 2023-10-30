@@ -1778,9 +1778,10 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
                     // std::cout << "Type of _final_graph[i][y]: " << typeid(_final_graph[i][y]).name() << std::endl;
                     if (cached_size > (max_cache_size))    
                         break;
-                    if(rand() % 100 < 1)
+                    if(rand() % 100 < 50)
                     {
-                        std::cout << "Inserting into cache start\n";
+                        cached_size++;
+                        // std::cout << "Inserting into cache start\n";
                         _data_store->get_distance(_final_graph[i][y], _final_graph[i][x]);
                     }
                 }
@@ -1797,6 +1798,7 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
         if (pool.size() < 2)
             cnt++;
     }
+    std::cout << "Cache size: " << cached_size << std::endl;
     diskann::cout << "Index built with degree: max:" << max << "  avg:" << (float)total / (float)(_nd + _num_frozen_pts)
                   << "  min:" << min << "  count(deg<2):" << cnt << std::endl;
 
