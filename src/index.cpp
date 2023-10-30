@@ -1761,7 +1761,7 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     //         _data_store->get_distance(_final_graph[n][j], _final_graph[n][i]);
     //     }
     // }
-    std::cout << "_nd: " << _nd << std::endl;
+    std::cout << "\n\n\n_nd: " << _nd << "\n\n\n";
     // std::cout << "_final_graph.size(): " << _final_graph.size() << std::endl;
 
     long long cached_size = 0;
@@ -1789,8 +1789,8 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
             }
         }
         auto &pool = _final_graph[i];
-        if (i < 20 || i > _nd - 20)
-            std::cout << "_final_graph[" << i << "].size(): " << _final_graph[i].size() << std::endl;
+        // if (i < 20 || i > _nd - 20)
+        //     std::cout << "_final_graph[" << i << "].size(): " << _final_graph[i].size() << std::endl;
         max = std::max(max, pool.size());
         min = std::min(min, pool.size());
         total += pool.size();
