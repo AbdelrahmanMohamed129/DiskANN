@@ -570,15 +570,18 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     _mm256_storeu_ps(unpack, sum);
     result = unpack[0] + unpack[1] + unpack[2] + unpack[3] + unpack[4] + unpack[5] + unpack[6] + unpack[7];
 
-    // if (dist_cache.size() < (1e7))
-    // {
-    //     dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
-    // }
+    if (dist_cache.size() < (1e7))
+    {
+        dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
+        std::cout << "el emplace msh moshkela brdo\n";
+    }
     
-    if (dist_cache.size() == 1 || dist_cache.size() != 1)
-        std::cout << "el size aho msh moshkela brdo\n";
-    if (dist_cache.end() == dist_cache.end())
-        std::cout << "el end msh moshkela brdo\n";
+    
+    // dyh brdo msh el moshkela
+    // if (dist_cache.size() == 1 || dist_cache.size() != 1)
+    //     std::cout << "el size aho msh moshkela brdo\n";
+    // if (dist_cache.end() == dist_cache.end())
+    //     std::cout << "el end msh moshkela brdo\n";
 
     // 8albn msh dyh el moshkela
     // if (a[0] == 1 || a[0] != 1)
