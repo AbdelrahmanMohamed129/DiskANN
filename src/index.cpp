@@ -1074,7 +1074,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
                 if (std::find(expanded_nodes.begin(), expanded_nodes.end(), nbr) == expanded_nodes.end())
                 {
                     expanded_nodes.emplace_back(nbr);
-                }        
+                }
             }
         }
 
@@ -1136,6 +1136,7 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
                     auto nextn = id_scratch[m + 1];
                     _data_store->prefetch_vector(nextn);
                 }
+
                 dist_scratch.push_back(_data_store->get_distance(aligned_query, id));
             }
         }
@@ -1158,6 +1159,7 @@ void Index<T, TagT, LabelT>::search_for_point_and_prune(int location, uint32_t L
 {
     const std::vector<uint32_t> init_ids = get_init_ids();
     const std::vector<LabelT> unused_filter_label;
+    
     if (!use_filter)
     {
         _data_store->get_vector(location, scratch->aligned_query());
@@ -1266,6 +1268,7 @@ void Index<T, TagT, LabelT>::occlude_list(const uint32_t location, std::vector<N
                 }
                 if (!prune_allowed)
                     continue;
+
                 float djk = _data_store->get_distance(iter2->id, iter->id);
                 if (_dist_metric == diskann::Metric::L2 || _dist_metric == diskann::Metric::COSINE)
                 {
@@ -1956,6 +1959,7 @@ void Index<T, TagT, LabelT>::build(const std::string &data_file, const size_t nu
                                    build_params.index_write_params);
     }
     std::chrono::duration<double> diff = std::chrono::high_resolution_clock::now() - s;
+    std::cout << "Indexing time: " << diff.count() << "\n";
     // cleanup
     if (build_params.label_file != "")
     {
