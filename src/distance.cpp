@@ -574,14 +574,19 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     // {
     //     dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
     // }
-    if (a[0] == 1 || a[0] != 1)
-        std::cout << "a[0] sh8al 3ady\n";
-    if (a[1] == 1 || a[1] != 1)
-        std::cout << "a[1] sh8al 3ady\n";
-    if (b[0] == 1 || b[0] != 1)
-        std::cout << "b[0] sh8al 3ady\n";
-    if (b[1] == 1 || b[1] != 1)
-        std::cout << "b[1] sh8al 3ady\n";
+    
+    if (dist_cache.size() == 1 || dist_cache.size() != 1)
+        std::cout << "el size aho msh moshkela brdo\n";
+
+    // 8albn msh dyh el moshkela
+    // if (a[0] == 1 || a[0] != 1)
+    //     std::cout << "a[0] sh8al 3ady\n";
+    // if (a[1] == 1 || a[1] != 1)
+    //     std::cout << "a[1] sh8al 3ady\n";
+    // if (b[0] == 1 || b[0] != 1)
+    //     std::cout << "b[0] sh8al 3ady\n";
+    // if (b[1] == 1 || b[1] != 1)
+    //     std::cout << "b[1] sh8al 3ady\n";
 
     return -result;
 }
