@@ -531,6 +531,7 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     auto distance2 = dist_cache.find({{a[0],a[1]},{b[0],b[1]}});
     if (distance2 != dist_cache.end())
     {
+        std::cout << "This distance is in cache\n";
         return distance2->second;
     }
     float result = 0.0f;
@@ -574,6 +575,7 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     {
         if(rand() % 100 < 5)
         {
+            std::cout << "Inserting into cache\n";
             dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
         }
     }
