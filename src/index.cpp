@@ -1761,22 +1761,35 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     //         _data_store->get_distance(_final_graph[n][j], _final_graph[n][i]);
     //     }
     // }
-    // std::cout << "_nd: " << _nd << std::endl;
+    std::cout << "_nd: " << _nd << std::endl;
     // std::cout << "_final_graph.size(): " << _final_graph.size() << std::endl;
 
+    long long cached_size = 0;
+    long long max_cache_size = 1e7;
     size_t max = 0, min = SIZE_MAX, total = 0, cnt = 0;
     for (size_t i = 0; i < _nd; i++)
     {
-        for (long unsigned int n = 0; n < _final_graph.size(); n++)
+        if (cached_size < max_cache_size)
         {
-            for (long unsigned int j = 0; j < _final_graph.size(); j++)
+            for (long unsigned int x = 0; x < _final_graph.size(); x++)
             {
-                _data_store->get_distance(_final_graph[i][j], _final_graph[i][n]);
+                for (long unsigned int y = 0; y < _final_graph.size(); y++)
+                {
+                    if (cached_size > (max_cache_size))    
+                        break;
+                    if(rand() % 100 < 1)
+                    {
+                        std::cout << "Inserting into cache start\n";
+                        _data_store->get_distance(_final_graph[i][y], _final_graph[i][x]);
+                    }
+                }
+                if (cached_size > (max_cache_size))    
+                        break;
             }
         }
         auto &pool = _final_graph[i];
-        // if (i < 20 || i > _nd - 20)
-        //     std::cout << "_final_graph[" << i << "].size(): " << _final_graph[i].size() << std::endl;
+        if (i < 20 || i > _nd - 20)
+            std::cout << "_final_graph[" << i << "].size(): " << _final_graph[i].size() << std::endl;
         max = std::max(max, pool.size());
         min = std::min(min, pool.size());
         total += pool.size();
