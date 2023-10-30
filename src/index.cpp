@@ -1771,9 +1771,9 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     {
         if (cached_size < max_cache_size)
         {
-            for (long unsigned int x = 0; x < _final_graph.size(); x++)
+            for (long unsigned int x = 0; x < _final_graph[i].size(); x++)
             {
-                for (long unsigned int y = 0; y < _final_graph.size(); y++)
+                for (long unsigned int y = 0; y < _final_graph[i].size(); y++)
                 {
                     std::cout << "Type of _final_graph[i][y]: " << typeid(_final_graph[i][y]).name() << std::endl;
                     if (cached_size > (max_cache_size))    
