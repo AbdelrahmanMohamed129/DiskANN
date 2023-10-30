@@ -1761,7 +1761,7 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     //         _data_store->get_distance(_final_graph[n][j], _final_graph[n][i]);
     //     }
     // }
-    std::cout << "\n\n\n_nd: " << _nd << "\n\n\n";
+    // std::cout << "\n\n\n_nd: " << _nd << "\n\n\n";
     // std::cout << "_final_graph.size(): " << _final_graph.size() << std::endl;
 
     long long cached_size = 0;
@@ -1778,7 +1778,7 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
                     // std::cout << "Type of _final_graph[i][y]: " << typeid(_final_graph[i][y]).name() << std::endl;
                     if (cached_size > (max_cache_size))    
                         break;
-                    // if(rand() % 100 < 2)
+                    if(rand() % 100 < 2)
                     {
                         cached_size++;
                         // std::cout << "Inserting into cache start\n";
