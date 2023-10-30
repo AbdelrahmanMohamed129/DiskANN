@@ -132,23 +132,6 @@ Index<T, TagT, LabelT>::Index(Metric m, const size_t dim, const size_t max_point
         _location_to_tag.reserve(total_internal_points);
         _tag_to_location.reserve(total_internal_points);
     }
-
-    
-    // std::cout << "aligned_query size(_dim): " << dim << std::endl;      // dh elly tl3 200
-    // tl3t f3ln kda, w kol wa7da etaba3et mara wa7da bs abl el querying. 8albn kda hne7seb hena el distance w n3mlha caching
-    // nested for loop b2a w ez
-    // std::cout << "Num_threads: " << num_threads << std::endl;
-    // T *aligned_query = scratch->aligned_query();
-
-
-
-    // for (long unsigned int i = 0; i < _final_graph.size(); i++)
-    // {
-    //     for (long unsigned int j = 0; j < _final_graph.size(); j++)
-    //     {
-    //         _data_store->get_distance(_final_graph[n][j], _final_graph[n][i]);
-    //     }
-    // }
 }
 
 template <typename T, typename TagT, typename LabelT>
@@ -224,24 +207,6 @@ void Index<T, TagT, LabelT>::initialize_query_scratch(uint32_t num_threads, uint
                                                 _data_store->get_alignment_factor(), _pq_dist);
         _query_scratch.push(scratch);
     }
-
-
-
-    
-    // std::cout << "size: " << _final_graph.size() << std::endl;          // tl3 10M f3ln
-    // std::cout << "aligned_query size(_dim): " << dim << std::endl;      // dh elly tl3 200
-    // tl3t f3ln kda, w kol wa7da etaba3et mara wa7da bs abl el querying. 8albn kda hne7seb hena el distance w n3mlha caching
-    // nested for loop b2a w ez
-
-    // std::cout << "Num_threads: " << num_threads << std::endl;
-    // T *aligned_query = scratch->aligned_query();
-    // for (auto i = 0; i < _final_graph.size(); i++)
-    // {
-    //     for (auto j = 0; j < dim; j++)
-    //     {
-    //         _data_store->get_distance(aligned_query[j], _final_graph[i])
-    //     }
-    // }
 }
 
 template <typename T, typename TagT, typename LabelT> size_t Index<T, TagT, LabelT>::save_tags(std::string tags_file)
@@ -1079,7 +1044,6 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
             }
             else
             {
-                // std::cout << "get distance 1\n" ;
                 distance = _data_store->get_distance(aligned_query, id);
             }
             Neighbor nn = Neighbor(id, distance);
@@ -1171,7 +1135,6 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::iterate_to_fixed_point(
                     auto nextn = id_scratch[m + 1];
                     _data_store->prefetch_vector(nextn);
                 }
-                // std::cout << "get distance 2\n (by5osh hena)" ;
                 dist_scratch.push_back(_data_store->get_distance(aligned_query, id));
             }
         }
@@ -1197,7 +1160,6 @@ void Index<T, TagT, LabelT>::search_for_point_and_prune(int location, uint32_t L
     if (!use_filter)
     {
         _data_store->get_vector(location, scratch->aligned_query());
-        // std::cout << "index.cpp: search_for_point_and_prune: iterate_to_fixed_point 1 (by5osh hena)\n";
         iterate_to_fixed_point(scratch->aligned_query(), Lindex, init_ids, scratch, false, unused_filter_label, false);
     }
     else
@@ -1207,7 +1169,6 @@ void Index<T, TagT, LabelT>::search_for_point_and_prune(int location, uint32_t L
             filter_specific_start_nodes.emplace_back(_label_to_medoid_id[x]);
 
         _data_store->get_vector(location, scratch->aligned_query());
-        // std::cout << "index.cpp: search_for_point_and_prune: iterate_to_fixed_point 2\n";
         iterate_to_fixed_point(scratch->aligned_query(), filteredLindex, filter_specific_start_nodes, scratch, true,
                                _pts_to_labels[location], false);
     }
@@ -1304,7 +1265,6 @@ void Index<T, TagT, LabelT>::occlude_list(const uint32_t location, std::vector<N
                 }
                 if (!prune_allowed)
                     continue;
-                // std::cout << "get distance 3\n" ;
                 float djk = _data_store->get_distance(iter2->id, iter->id);
                 if (_dist_metric == diskann::Metric::L2 || _dist_metric == diskann::Metric::COSINE)
                 {
@@ -1351,7 +1311,6 @@ void Index<T, TagT, LabelT>::prune_neighbors(const uint32_t location, std::vecto
     // If using _pq_build, over-write the PQ distances with actual distances
     if (_pq_dist)
     {
-        // std::cout << "get distance 4\n" ;
         for (auto &ngh : pool)
             ngh.distance = _data_store->get_distance(ngh.id, location);
     }
@@ -1425,7 +1384,6 @@ void Index<T, TagT, LabelT>::inter_insert(uint32_t n, std::vector<uint32_t> &pru
             {
                 if (dummy_visited.find(cur_nbr) == dummy_visited.end() && cur_nbr != des)
                 {
-                    // std::cout << "get distance 5\n" ;
                     float dist = _data_store->get_distance(des, cur_nbr);
                     dummy_pool.emplace_back(Neighbor(cur_nbr, dist));
                     dummy_visited.insert(cur_nbr);
@@ -1503,13 +1461,11 @@ void Index<T, TagT, LabelT>::link(const IndexWriteParameters &parameters)
         std::vector<uint32_t> pruned_list;
         if (_filtered_index)
         {
-            // std::cout << "index.cpp: link: search_for_point_and_prune 1\n";
             search_for_point_and_prune(node, _indexingQueueSize, pruned_list, scratch, _filtered_index,
                                        _filterIndexingQueueSize);
         }
         else
         {
-            // std::cout << "index.cpp: link: search_for_point_and_prune 2 (by5osh hena)\n";
             search_for_point_and_prune(node, _indexingQueueSize, pruned_list, scratch);
         }
         {
@@ -1549,7 +1505,6 @@ void Index<T, TagT, LabelT>::link(const IndexWriteParameters &parameters)
             {
                 if (dummy_visited.find(cur_nbr) == dummy_visited.end() && cur_nbr != node)
                 {
-                    // std::cout << "get distance 6\n" ;
                     float dist = _data_store->get_distance(node, cur_nbr);
                     dummy_pool.emplace_back(Neighbor(cur_nbr, dist));
                     dummy_visited.insert(cur_nbr);
@@ -1596,7 +1551,6 @@ void Index<T, TagT, LabelT>::prune_all_neighbors(const uint32_t max_degree, cons
                 {
                     if (dummy_visited.find(cur_nbr) == dummy_visited.end() && cur_nbr != node)
                     {
-                        // std::cout << "get distance 7\n" ;
                         float dist = _data_store->get_distance((location_t)node, (location_t)cur_nbr);
                         dummy_pool.emplace_back(Neighbor(cur_nbr, dist));
                         dummy_visited.insert(cur_nbr);
@@ -1742,27 +1696,7 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     }
 
     generate_frozen_point();
-    // std::cout << "Link mn gowa build_with_data_populated (by5osh hena mara wa7da bs)\n";
     link(parameters);
-
-
-    // std::cout << "aligned_query size(_dim): " << dim << std::endl;      // dh elly tl3 200
-    // tl3t f3ln kda, w kol wa7da etaba3et mara wa7da bs abl el querying. 8albn kda hne7seb hena el distance w n3mlha caching
-    // nested for loop b2a w ez
-    // std::cout << "Num_threads: " << num_threads << std::endl;
-    // T *aligned_query = scratch->aligned_query();
-
-
-
-    // for (long unsigned int i = 0; i < _final_graph.size(); i++)
-    // {
-    //     for (long unsigned int j = 0; j < _final_graph.size(); j++)
-    //     {
-    //         _data_store->get_distance(_final_graph[n][j], _final_graph[n][i]);
-    //     }
-    // }
-    // std::cout << "\n\n\n_nd: " << _nd << "\n\n\n";
-    // std::cout << "_final_graph.size(): " << _final_graph.size() << std::endl;
 
     long long cached_size = 0;
     long long max_cache_size = 1e7;
@@ -1775,13 +1709,11 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
             {
                 for (long unsigned int y = 0; y < _final_graph[i].size(); y++)
                 {
-                    // std::cout << "Type of _final_graph[i][y]: " << typeid(_final_graph[i][y]).name() << std::endl;
                     if (cached_size > (max_cache_size))    
                         break;
                     if(rand() % 100 < 2)
                     {
                         cached_size++;
-                        // std::cout << "Inserting into cache start\n";
                         _data_store->get_distance(_final_graph[i][y], _final_graph[i][x]);
                     }
                 }
@@ -1790,15 +1722,12 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
             }
         }
         auto &pool = _final_graph[i];
-        // if (i < 20 || i > _nd - 20)
-        //     std::cout << "_final_graph[" << i << "].size(): " << _final_graph[i].size() << std::endl;
         max = std::max(max, pool.size());
         min = std::min(min, pool.size());
         total += pool.size();
         if (pool.size() < 2)
             cnt++;
     }
-    // std::cout << "Cache size: " << cached_size << std::endl;
     diskann::cout << "Index built with degree: max:" << max << "  avg:" << (float)total / (float)(_nd + _num_frozen_pts)
                   << "  min:" << min << "  count(deg<2):" << cnt << std::endl;
 
@@ -2252,7 +2181,6 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::search(const T *query, con
     std::shared_lock<std::shared_timed_mutex> lock(_update_lock);
 
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
-    // std::cout << "index.cpp: search: iterate_to_fixed_point 3\n";
     auto retval =
         iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, false, unused_filter_label, true);
 
@@ -2355,7 +2283,6 @@ std::pair<uint32_t, uint32_t> Index<T, TagT, LabelT>::search_with_filters(const 
     // T *aligned_query = scratch->aligned_query();
     // memcpy(aligned_query, query, _dim * sizeof(T));
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
-    // std::cout << "index.cpp: search_with_filters: iterate_to_fixed_point 4\n";
     auto retval = iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, true, filter_vec, true);
 
     auto best_L_nodes = scratch->best_l_nodes();
@@ -2435,7 +2362,6 @@ size_t Index<T, TagT, LabelT>::search_with_tags(const T *query, const uint64_t K
     const std::vector<LabelT> unused_filter_label;
 
     _distance->preprocess_query(query, _data_store->get_dims(), scratch->aligned_query());
-    // std::cout << "index.cpp: search_with_tags: iterate_to_fixed_point 5\n";
     iterate_to_fixed_point(scratch->aligned_query(), L, init_ids, scratch, false, unused_filter_label, true);
 
     NeighborPriorityQueue &best_L_nodes = scratch->best_l_nodes();
@@ -2603,7 +2529,6 @@ inline void Index<T, TagT, LabelT>::process_delete(const tsl::robin_set<uint32_t
             expanded_nghrs_vec.reserve(expanded_nodes_set.size());
             for (auto &ngh : expanded_nodes_set)
             {
-                // std::cout << "get distance 8\n" ;
                 expanded_nghrs_vec.emplace_back(ngh, _data_store->get_distance((location_t)loc, (location_t)ngh));
             }
             std::sort(expanded_nghrs_vec.begin(), expanded_nghrs_vec.end());
@@ -3109,12 +3034,10 @@ int Index<T, TagT, LabelT>::insert_point(const T *point, const TagT tag)
     std::vector<uint32_t> pruned_list;
     if (_filtered_index)
     {
-        // std::cout << "insert_point 1 \n";
         search_for_point_and_prune(location, _indexingQueueSize, pruned_list, scratch, true, _filterIndexingQueueSize);
     }
     else
     {
-        // std::cout << "insert_point 2 \n";
         search_for_point_and_prune(location, _indexingQueueSize, pruned_list, scratch);
     }
     {

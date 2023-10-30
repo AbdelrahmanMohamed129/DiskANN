@@ -528,11 +528,9 @@ template <typename T> float DistanceFastL2<T>::norm(const T *a, uint32_t size) c
 
 float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint32_t size) const
 {
-    // std::cout << "Gowa el Compare\n";
     auto distance2 = dist_cache.find({{a[0],a[1]},{b[0],b[1]}});
     if (distance2 != dist_cache.end())
     {
-        // std::cout << "This distance is being read from cache\n";
         return distance2->second;
     }
     float result = 0.0f;
@@ -574,7 +572,6 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
 
     if (dist_cache.size() < (1e7))
     {
-        // std::cout << "Inserting into cache fr fr\n";
         dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
     }
     
