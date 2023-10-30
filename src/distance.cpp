@@ -570,10 +570,18 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     _mm256_storeu_ps(unpack, sum);
     result = unpack[0] + unpack[1] + unpack[2] + unpack[3] + unpack[4] + unpack[5] + unpack[6] + unpack[7];
 
-    if (dist_cache.size() < (1e7))
-    {
-        dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
-    }
+    // if (dist_cache.size() < (1e7))
+    // {
+    //     dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
+    // }
+    if (a[0] == 1 || a[0] != 1)
+        std::cout << "a[0] sh8al 3ady\n";
+    if (a[1] == 1 || a[1] != 1)
+        std::cout << "a[1] sh8al 3ady\n";
+    if (b[0] == 1 || b[0] != 1)
+        std::cout << "b[0] sh8al 3ady\n";
+    if (b[1] == 1 || b[1] != 1)
+        std::cout << "b[1] sh8al 3ady\n";
 
     return -result;
 }
