@@ -577,6 +577,8 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
     
     if (dist_cache.size() == 1 || dist_cache.size() != 1)
         std::cout << "el size aho msh moshkela brdo\n";
+    if (dist_cache.end() == dist_cache.end())
+        std::cout << "el end msh moshkela brdo\n";
 
     // 8albn msh dyh el moshkela
     // if (a[0] == 1 || a[0] != 1)
