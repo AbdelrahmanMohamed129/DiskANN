@@ -1700,6 +1700,7 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
 
     long long cached_size = 0;
     long long max_cache_size = 1e7;
+    std::cout << "Start Caching" << std::endl;
     size_t max = 0, min = SIZE_MAX, total = 0, cnt = 0;
     for (size_t i = 0; i < _nd; i++)
     {
