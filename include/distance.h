@@ -18,7 +18,7 @@ enum Metric
 template <typename T> class Distance
 {
   public:
-    static std::map<std::pair<std::pair<float,float>,std::pair<float,float>>,float> dist_cache;
+    mutable std::map<std::pair<std::pair<float,float>,std::pair<float,float>>,float> dist_cache;
     DISKANN_DLLEXPORT Distance(diskann::Metric dist_metric) : _distance_metric(dist_metric)
     {
     }
