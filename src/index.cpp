@@ -1703,7 +1703,7 @@ void Index<T, TagT, LabelT>::build_with_data_populated(const IndexWriteParameter
     link(parameters);
 
     long long cached_size = 0;
-    long long max_cache_size = 1e5;
+    long long max_cache_size = 10000;
     std::cout << "Start Caching..." << std::endl;
     size_t max = 0, min = SIZE_MAX, total = 0, cnt = 0;
     for (size_t i = 0; i < _nd; i++)
