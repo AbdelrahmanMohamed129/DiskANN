@@ -571,7 +571,10 @@ float AVXDistanceInnerProductFloat::compare(const float *a, const float *b, uint
 
     if (dist_cache.size() < (10000))
     {
-        dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
+        if(rand() % 100 < 2)
+        {
+            dist_cache.emplace(std::make_pair(std::make_pair(std::make_pair(a[0],a[1]),std::make_pair(b[0],b[1])), - result));
+        }
     }
 
     return -result;
